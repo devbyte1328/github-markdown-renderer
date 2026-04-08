@@ -4,6 +4,7 @@ import subprocess
 import time
 import signal
 
+import Temp_MD_Scan
 
 PATH_OF_HOME_USER = OS_return_path_of_home_user()
 PATH_OF_SOURCE_DIRECTORY = f"{PATH_OF_HOME_USER}/.markdown/src"
@@ -49,6 +50,9 @@ while Main == True:
     if OS_return_boolean_directory(PATH_OF_SOURCE_DIRECTORY) == False:
         OS_initialize_directory(PATH_OF_SOURCE_DIRECTORY)
 
+    markdown_script = Python_read_file(path_of_file_for_input)
+    Temp_MD_Scan.scan_and_copy(path_of_file_for_input, PATH_OF_SOURCE_DIRECTORY)
+
     path_of_file_for_output = f"{PATH_OF_SOURCE_DIRECTORY}/{markdown_script_for_render}"
 
     Main_source_files_for_deletion()
@@ -66,12 +70,13 @@ while Main == True:
 
     record_of_markdown_script = ""
     while True:
-        time.sleep(0.5)
-        try:
-            markdown_script = Python_read_file(path_of_file_for_input)
-            if markdown_script != record_of_markdown_script:
-                SubProcess_Initialize(f"cp {path_of_file_for_input} {path_of_file_for_output}")
-                record_of_markdown_script = markdown_script
-        except FileNotFoundError:
-            pass
+            time.sleep(0.5)
+            try:
+                markdown_script = Python_read_file(path_of_file_for_input)
+                if markdown_script != record_of_markdown_script:
+                    Temp_MD_Scan.scan_and_copy(path_of_file_for_input, PATH_OF_SOURCE_DIRECTORY)
+                    SubProcess_Initialize(f"cp {path_of_file_for_input} {path_of_file_for_output}")
+                    record_of_markdown_script = markdown_script
+            except FileNotFoundError:
+                pass
 
