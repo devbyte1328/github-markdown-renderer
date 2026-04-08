@@ -10,6 +10,7 @@ PATH_OF_PYTHON_SCRIPT = OS_return_absolute_path("Main.py")
 
 
 SubProcess_Initialize(f"mdbook init ~/.markdown --title \"Github Markdown Renderer\" --ignore=none --force > /dev/null 2>&1")
+SubProcess_Initialize(f"cp Temp_MD_Scan.md ~/.markdown/")
 SubProcess_Initialize(f"cp STANDARDS.md ~/.markdown/")
 SubProcess_Initialize(f"cp Standards.py ~/.markdown/")
 SubProcess_Initialize(f"cp Main.py ~/.markdown/")
